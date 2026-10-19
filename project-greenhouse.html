@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Умная теплица — Проект</title>
+<style>
+  :root { --bg: #f4f6fb; --surface: #ffffff; --text: #0b1220; --muted: #5f6b81; --accent: #0ea5e9; --accent-2: #2563eb; --border: #e2e7f0; --radius: 18px; --shadow: 0 10px 30px rgba(11,18,32,.07); }
+  [data-theme="dark"] { --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --muted: #94a3b8; --accent: #0ea5e9; --accent-2: #3b82f6; --border: #334155; --shadow: 0 10px 30px rgba(0,0,0,.3); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; transition: background .3s, color .3s; }
+  .container { width: min(900px, 90%); margin: 0 auto; }
+  .nav { padding: 20px 0; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--accent); font-weight: 600; font-size: 0.95rem; }
+  .back-btn:hover { text-decoration: underline; }
+  .hero { padding: 60px 0 40px; }
+  .badge { display: inline-block; background: rgba(14,165,233,.1); color: var(--accent); padding: 6px 14px; border-radius: 99px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin: 0 0 16px; line-height: 1.2; }
+  .lead { font-size: 1.15rem; color: var(--muted); max-width: 75ch; margin-bottom: 30px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); margin-bottom: 40px; }
+  .project-img { width: 100%; max-height: 500px; object-fit: contain; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); margin-bottom: 30px; display: block; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+  .tag { background: var(--bg); border: 1px solid var(--border); padding: 6px 14px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; }
+  h2 { font-size: 1.5rem; font-weight: 700; margin-top: 0; margin-bottom: 16px; }
+  p { margin-bottom: 16px; color: var(--text); }
+  ul { padding-left: 20px; margin-bottom: 20px; color: var(--muted); }
+  li { margin-bottom: 8px; }
+  .theme-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--surface); border: 1px solid var(--border); width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow); display: grid; place-items: center; }
+</style>
+</head>
+<body>
+<nav class="nav"><div class="container"><a href="portfolio.html" class="back-btn">← Вернуться в портфолио</a></div></nav>
+<header class="hero container">
+  <span class="badge">🌱 Участник · СтудСтартап 2024</span>
+  <h1>Умная теплица</h1>
+  <p class="lead">Система автоматического контроля микроклимата для теплиц с удаленным мониторингом и управлением поливом.</p>
+  <div class="tags"><span class="tag">ESP32</span><span class="tag">C++</span><span class="tag">IoT</span><span class="tag">Web Interface</span></div>
+</header>
+<main class="container">
+  <div class="card">
+    <img src="images/greenhouse-scheme.png" alt="Схема умной теплицы" class="project-img">
+    <h2>Описание проекта</h2>
+    <p>Проект представляет собой аппаратно-программный комплекс для автоматизации теплиц. Система собирает данные о микроклимате и автоматически управляет исполнительными устройствами.</p>
+    <p>В рамках работы разработана печатная плата на базе микроконтроллера ESP32, написана прошивка на C++, а также создан удобный веб-интерфейс для удаленного мониторинга.</p>
+    <h2>Функциональные возможности</h2>
+    <ul>
+      <li><b>Мониторинг:</b> Сбор данных с датчиков температуры, влажности почвы и освещенности.</li>
+      <li><b>Автоматизация:</b> Реализовано управление насосом полива и светодиодным освещением.</li>
+      <li><b>Телеметрия:</b> Настроена передача данных по Wi-Fi с отображением на веб-странице.</li>
+      <li><b>Защита:</b> Внедрено ограничение по времени работы насоса для предотвращения затопления.</li>
+    </ul>
+  </div>
+</main>
+<button class="theme-toggle" id="themeToggle">🌙</button>
+<script>
+  const themeToggle = document.getElementById('themeToggle'); const html = document.documentElement;
+  const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'dark') { html.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; }
+  themeToggle.addEventListener('click', () => {
+    if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); themeToggle.textContent = '🌙'; }
+    else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeToggle.textContent = '☀️'; }
+  });
+</script>
+</body>
+</html>
