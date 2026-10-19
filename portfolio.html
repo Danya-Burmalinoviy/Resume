@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портфолио — Даниил и Ефим Емельяновы</title>
     <script>
-        // Защита от вспышки белого экрана при темной теме
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.setAttribute('data-theme', 'dark');
         }
@@ -233,7 +232,6 @@
                     <h3 style="margin-bottom: 12px; color: var(--heading);">SMD-установщик</h3>
                     <p style="font-size: 0.95rem; color: var(--text-light);">Автоматическая установка для монтажа SMD-компонентов с точностью позиционирования 100 мкм.</p>
                     <div class="tags"><span class="tag">Autodesk Inventor</span><span class="tag">CAD</span></div>
-                    <!-- Изменена ссылка на внешний сайт и добавлен target="_blank" -->
                     <a href="https://danya-burmalinoviy.github.io/StankoProm/" target="_blank" rel="noopener noreferrer" class="btn">Перейти на сайт ↗</a>
                 </div>
                 <div class="card project-card reveal">
@@ -257,7 +255,7 @@
                     <div class="doc-info">
                         <h4>Дипломная работа (ВКР)</h4>
                         <p>Проектирование установщика SMD компонентов.</p>
-                        <a href="diploma.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="docs/diploma.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal">
@@ -265,7 +263,7 @@
                     <div class="doc-info">
                         <h4>Приложение к диплому</h4>
                         <p>Официальная выписка с оценками.</p>
-                        <a href="diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="docs/diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal">
@@ -273,7 +271,7 @@
                     <div class="doc-info">
                         <h4>Диплом о переподготовке</h4>
                         <p>Разработчик Python.</p>
-                        <a href="python-certificate.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="docs/python-certificate.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal" style="flex-direction: column;">
@@ -285,7 +283,7 @@
                         </div>
                     </div>
                     <video class="video-appendix" controls preload="metadata">
-                        <source src="diploma-machine-demo.mp4" type="video/mp4">
+                        <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -414,7 +412,7 @@
                 <button class="modal-close" onclick="document.getElementById('pdfModal').classList.remove('open')">&times;</button>
             </div>
             <div class="modal-body">
-                <iframe src="startup-diploma.pdf" title="Диплом"></iframe>
+                <iframe src="docs/startup-diploma.pdf" title="Диплом"></iframe>
             </div>
         </div>
     </div>
@@ -448,7 +446,6 @@
         const logoMark = document.getElementById('logoMark');
         const logoName = document.getElementById('logoName');
         
-        // Навигационные ссылки
         const navAbout = document.getElementById('nav-about');
         const navEducation = document.getElementById('nav-education');
         const navPortfolio = document.getElementById('nav-portfolio');
@@ -473,7 +470,7 @@
                 navAbout.href = '#efim-about';
                 navEducation.href = '#efim-education';
                 navPortfolio.href = '#efim-portfolio';
-                navExperience.style.display = 'none'; // У Ефима нет опыта
+                navExperience.style.display = 'none';
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
             initReveal();
