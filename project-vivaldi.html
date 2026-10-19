@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Антенна Вивальди — Проект</title>
+<script>
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+</script>
 <style>
   :root {
     --bg: #f4f6fb; --surface: #ffffff; --text: #0b1220; --muted: #5f6b81;
@@ -47,7 +52,6 @@
   h2 { font-size: 1.5rem; font-weight: 700; margin-top: 0; margin-bottom: 16px; }
   p { margin-bottom: 16px; color: var(--text); }
   
-  /* Галерея */
   .gallery {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px; margin-top: 30px;
@@ -103,24 +107,29 @@
     <h2>Галерея проекта</h2>
     <div class="gallery">
       <div class="gallery-item">
-        <img src="Антенна Вивальди модель.png" alt="3D-модель антенны">
+        <!-- Переименуйте файл в vivaldi-model.png -->
+        <img src="vivaldi-model.png" alt="3D-модель антенны" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'gray\'>Файл vivaldi-model.png не найден</text></svg>'">
         <div class="gallery-caption">3D-модель в CST Studio</div>
       </div>
       <div class="gallery-item">
-        <img src="Антенна Вивальди.png" alt="Изготовленный макет">
+        <!-- Переименуйте файл в vivaldi-layout.png -->
+        <img src="vivaldi-layout.png" alt="Изготовленный макет" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'gray\'>Файл vivaldi-layout.png не найден</text></svg>'">
         <div class="gallery-caption">Изготовленный макет</div>
       </div>
       <div class="gallery-item">
-        <img src="Расчитаный КСВ.png" alt="Рассчитанный КСВ">
+        <!-- Переименуйте файл в vswr-sim.png -->
+        <img src="vswr-sim.png" alt="Рассчитанный КСВ" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'gray\'>Файл vswr-sim.png не найден</text></svg>'">
         <div class="gallery-caption">Рассчитанный КСВ (Моделирование)</div>
       </div>
       <div class="gallery-item">
-        <img src="Измеренный КСВ.png" alt="Измеренный КСВ">
+        <!-- Переименуйте файл в vswr-meas.png -->
+        <img src="vswr-meas.png" alt="Измеренный КСВ" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'gray\'>Файл vswr-meas.png не найден</text></svg>'">
         <div class="gallery-caption">Измеренный КСВ (Практика)</div>
       </div>
       <div class="gallery-item">
+        <!-- Переименуйте файл в pattern.mp4 -->
         <video controls preload="metadata">
-          <source src="ДН антенны.mp4" type="video/mp4">
+          <source src="pattern.mp4" type="video/mp4">
         </video>
         <div class="gallery-caption">Диаграмма направленности (Видео)</div>
       </div>
@@ -133,11 +142,7 @@
 <script>
   const themeToggle = document.getElementById('themeToggle');
   const html = document.documentElement;
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    html.setAttribute('data-theme', 'dark');
-    themeToggle.textContent = '☀️';
-  }
+  if (html.getAttribute('data-theme') === 'dark') { themeToggle.textContent = '☀️'; }
   themeToggle.addEventListener('click', () => {
     if (html.getAttribute('data-theme') === 'dark') {
       html.removeAttribute('data-theme');
