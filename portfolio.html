@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портфолио — Даниил и Ефим Емельяновы</title>
+    <script>
+        // Защита от вспышки белого экрана при темной теме
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
     <style>
         :root { --primary: #1a73e8; --primary-dark: #1557b0; --primary-light: #4A9BF5; --accent: #00BCD4; --accent-soft: #E0F7FA; --bg: #F5F9FF; --white: #ffffff; --card-bg: #ffffff; --text: #1E293B; --text-light: #64748B; --heading: #0F1F3D; --border: #DCE7F5; --shadow: 0 6px 22px rgba(26, 115, 232, 0.10); --shadow-hover: 0 14px 34px rgba(26, 115, 232, 0.18); --radius: 14px; --gradient: linear-gradient(135deg, #1a73e8 0%, #4A9BF5 100%); --gradient-accent: linear-gradient(135deg, #00BCD4 0%, #1a73e8 100%); --hero-bg: linear-gradient(135deg, #EAF2FE 0%, #F5F9FF 60%, #E0F7FA 100%); --header-bg: #ffffff; }
         [data-theme="dark"] { --primary: #4FACFE; --primary-dark: #00F2FE; --primary-light: #7DD3FC; --accent: #00F2FE; --accent-soft: #0F2937; --bg: #0F172A; --white: #1E293B; --card-bg: #1E293B; --text: #E2E8F0; --text-light: #94A3B8; --heading: #F1F5F9; --border: #334155; --shadow: 0 6px 22px rgba(0, 0, 0, 0.35); --shadow-hover: 0 14px 34px rgba(0, 242, 254, 0.15); --gradient: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%); --gradient-accent: linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%); --hero-bg: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #0F2937 100%); --header-bg: #0F172A; }
@@ -116,10 +122,10 @@
             </a>
             <nav class="nav">
                 <div class="nav-links">
-                    <a href="#about" class="nav-link">Обо мне</a>
-                    <a href="#education" class="nav-link">Образование</a>
-                    <a href="#portfolio" class="nav-link">Портфолио</a>
-                    <a href="#experience" class="nav-link">Опыт</a>
+                    <a href="#dan-about" id="nav-about" class="nav-link">Обо мне</a>
+                    <a href="#dan-education" id="nav-education" class="nav-link">Образование</a>
+                    <a href="#dan-portfolio" id="nav-portfolio" class="nav-link">Портфолио</a>
+                    <a href="#dan-experience" id="nav-experience" class="nav-link">Опыт</a>
                 </div>
                 <div class="profile-switch">
                     <button class="profile-btn active" id="btn-dan" onclick="switchProfile('dan')">Даниил</button>
@@ -227,7 +233,7 @@
                     <h3 style="margin-bottom: 12px; color: var(--heading);">SMD-установщик</h3>
                     <p style="font-size: 0.95rem; color: var(--text-light);">Автоматическая установка для монтажа SMD-компонентов с точностью позиционирования 100 мкм.</p>
                     <div class="tags"><span class="tag">Autodesk Inventor</span><span class="tag">CAD</span></div>
-                    <a href="index.html" class="btn">Перейти на сайт ↗</a>
+                    <a href="project-smd.html" class="btn">Перейти на сайт ↗</a>
                 </div>
                 <div class="card project-card reveal">
                     <h3 style="margin-bottom: 12px; color: var(--heading);">Умная теплица</h3>
@@ -250,7 +256,7 @@
                     <div class="doc-info">
                         <h4>Дипломная работа (ВКР)</h4>
                         <p>Проектирование установщика SMD компонентов.</p>
-                        <a href="docs/diploma.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="diploma.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal">
@@ -258,7 +264,7 @@
                     <div class="doc-info">
                         <h4>Приложение к диплому</h4>
                         <p>Официальная выписка с оценками.</p>
-                        <a href="docs/diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal">
@@ -266,7 +272,7 @@
                     <div class="doc-info">
                         <h4>Диплом о переподготовке</h4>
                         <p>Разработчик Python.</p>
-                        <a href="docs/python-certificate.pdf" download class="doc-link">⬇️ Скачать PDF</a>
+                        <a href="python-certificate.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
                 <div class="card doc-card reveal" style="flex-direction: column;">
@@ -278,7 +284,7 @@
                         </div>
                     </div>
                     <video class="video-appendix" controls preload="metadata">
-                        <source src="video/diploma-machine-demo.mp4" type="video/mp4">
+                        <source src="diploma-machine-demo.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -407,7 +413,7 @@
                 <button class="modal-close" onclick="document.getElementById('pdfModal').classList.remove('open')">&times;</button>
             </div>
             <div class="modal-body">
-                <iframe src="docs/startup-diploma.pdf" title="Диплом"></iframe>
+                <iframe src="startup-diploma.pdf" title="Диплом"></iframe>
             </div>
         </div>
     </div>
@@ -415,11 +421,23 @@
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        if (savedTheme === 'dark') { html.setAttribute('data-theme', 'dark'); themeToggle.textContent = '☀️'; } else { html.removeAttribute('data-theme'); themeToggle.textContent = '🌙'; }
+        
+        if (html.getAttribute('data-theme') === 'dark') {
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+
         themeToggle.addEventListener('click', () => {
-            if (html.getAttribute('data-theme') === 'dark') { html.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); themeToggle.textContent = '🌙'; }
-            else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeToggle.textContent = '☀️'; }
+            if (html.getAttribute('data-theme') === 'dark') { 
+                html.removeAttribute('data-theme'); 
+                localStorage.setItem('theme', 'light'); 
+                themeToggle.textContent = '🌙'; 
+            } else { 
+                html.setAttribute('data-theme', 'dark'); 
+                localStorage.setItem('theme', 'dark'); 
+                themeToggle.textContent = '☀️'; 
+            }
         });
 
         const mainDan = document.getElementById('main-dan');
@@ -428,16 +446,33 @@
         const btnEfim = document.getElementById('btn-efim');
         const logoMark = document.getElementById('logoMark');
         const logoName = document.getElementById('logoName');
+        
+        // Навигационные ссылки
+        const navAbout = document.getElementById('nav-about');
+        const navEducation = document.getElementById('nav-education');
+        const navPortfolio = document.getElementById('nav-portfolio');
+        const navExperience = document.getElementById('nav-experience');
 
         function switchProfile(profile) {
             if (profile === 'dan') {
                 mainDan.classList.remove('hidden-main'); mainEfim.classList.add('hidden-main');
                 btnDan.classList.add('active'); btnEfim.classList.remove('active');
                 logoMark.textContent = 'ДЕ'; logoName.textContent = 'Даниил Емельянов';
+                
+                navAbout.href = '#dan-about';
+                navEducation.href = '#dan-education';
+                navPortfolio.href = '#dan-portfolio';
+                navExperience.href = '#dan-experience';
+                navExperience.style.display = 'block';
             } else {
                 mainEfim.classList.remove('hidden-main'); mainDan.classList.add('hidden-main');
                 btnEfim.classList.add('active'); btnDan.classList.remove('active');
                 logoMark.textContent = 'ЕЕ'; logoName.textContent = 'Ефим Емельянов';
+                
+                navAbout.href = '#efim-about';
+                navEducation.href = '#efim-education';
+                navPortfolio.href = '#efim-portfolio';
+                navExperience.style.display = 'none'; // У Ефима нет опыта
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
             initReveal();
