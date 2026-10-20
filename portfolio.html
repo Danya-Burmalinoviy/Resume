@@ -116,26 +116,19 @@
         .video-appendix { width: 100%; border-radius: 12px; margin-top: 16px; border: 1px solid var(--border); background: #000; }
 
         /* ═══════════ СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ ВИДЕО/3D ═══════════ */
-        /* Растягиваем карточку с медиа на всю ширину сетки */
-        .media-card { grid-column: 1 / -1; }
+        .media-card { grid-column: span 2; display: flex; flex-direction: column; }
+        .media-header { display: flex; gap: 20px; align-items: flex-start; width: 100%; margin-bottom: 20px; }
         
-        .media-toggle { display: inline-flex; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px; margin-top: 10px; }
+        .media-toggle { display: inline-flex; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px; margin-bottom: 20px; align-self: flex-start; }
         .media-btn { background: transparent; border: none; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; color: var(--text-light); border-radius: 16px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
         .media-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
         
-        .media-container { display: none; width: 100%; margin-top: 16px; }
+        .media-container { display: none; width: 100%; }
         .media-container.active { display: block; }
         
-        /* Увеличили высоту 3D-окна */
         .viewer-3d {
-            width: 100%; 
-            height: 550px; /* Было 16/9, теперь фиксированная большая высота */
-            border-radius: 12px;
-            border: 1px solid var(--border); 
-            background: #0b1220;
-            position: relative; 
-            overflow: hidden; 
-            cursor: grab;
+            width: 100%; height: 550px; border-radius: 12px; border: 1px solid var(--border); 
+            background: #0b1220; position: relative; overflow: hidden; cursor: grab;
         }
         .viewer-3d:active { cursor: grabbing; }
         .viewer-3d .loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-light); font-size: 0.9rem; }
@@ -170,8 +163,9 @@
         @media (max-width: 992px) {
             .hero-text h1 { font-size: 2.5rem; } .stats { grid-template-columns: repeat(2, 1fr); }
             .about-grid, .edu-grid, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .media-card { grid-column: span 1; }
             .nav-links { display: none; }
-            .viewer-3d { height: 350px; } /* Уменьшаем высоту на телефонах */
+            .viewer-3d { height: 350px; }
         }
     </style>
 </head>
@@ -333,7 +327,9 @@
                         <a href="docs/diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
-                <div class="card doc-card reveal">
+                
+                <!-- Диплом Python (на всю ширину) -->
+                <div class="card doc-card reveal" style="grid-column: span 2;">
                     <div class="doc-icon">🐍</div>
                     <div class="doc-info">
                         <h4>Диплом о переподготовке</h4>
@@ -343,24 +339,22 @@
                 </div>
                 
                 <!-- МЕДИА КАРТОЧКА (Даниил) -->
-                <div class="card doc-card media-card reveal">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; flex-wrap: wrap; gap: 10px;">
-                        <div style="display: flex; gap: 20px; align-items: flex-start;">
-                            <div class="doc-icon">🎥</div>
-                            <div class="doc-info">
-                                <h4>Медиа-приложение</h4>
-                                <p>Демонстрация работы SMD-установщика.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="media-toggle">
-                            <button class="media-btn active" onclick="switchMedia('dan', 'video', this)">Видео</button>
-                            <button class="media-btn" onclick="switchMedia('dan', '3d', this)">3D-модель</button>
+                <div class="card media-card reveal">
+                    <div class="media-header">
+                        <div class="doc-icon">🎥</div>
+                        <div class="doc-info" style="flex: 1;">
+                            <h4>Медиа-приложение</h4>
+                            <p>Демонстрация работы SMD-установщика.</p>
                         </div>
                     </div>
                     
+                    <div class="media-toggle">
+                        <button class="media-btn active" onclick="switchMedia('dan', 'video', this)">Видео</button>
+                        <button class="media-btn" onclick="switchMedia('dan', '3d', this)">3D-модель</button>
+                    </div>
+                    
                     <div id="dan-video-container" class="media-container active">
-                        <video class="video-appendix" controls preload="metadata">
+                        <video class="video-appendix" controls preload="metadata" style="margin-top: 0;">
                             <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -405,7 +399,6 @@
 
     <!-- ═══════════ ПРОФИЛЬ 2: ЕФИМ ═══════════ -->
     <main id="main-efim" class="hidden-main">
-        <!-- Копия секций Даниила с измененными ID и контентом -->
         <section class="hero" id="hero-efim">
             <div class="hero-inner">
                 <div class="hero-text">
@@ -537,7 +530,9 @@
                         <a href="docs/efim-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
-                <div class="card doc-card reveal">
+                
+                <!-- Диплом Python (на всю ширину) -->
+                <div class="card doc-card reveal" style="grid-column: span 2;">
                     <div class="doc-icon">🐍</div>
                     <div class="doc-info">
                         <h4>Диплом о переподготовке</h4>
@@ -547,24 +542,22 @@
                 </div>
                 
                 <!-- МЕДИА КАРТОЧКА (Ефим) -->
-                <div class="card doc-card media-card reveal">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; flex-wrap: wrap; gap: 10px;">
-                        <div style="display: flex; gap: 20px; align-items: flex-start;">
-                            <div class="doc-icon">🎥</div>
-                            <div class="doc-info">
-                                <h4>Медиа-приложение</h4>
-                                <p>Демонстрация работы SMD-установщика.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="media-toggle">
-                            <button class="media-btn active" onclick="switchMedia('efim', 'video', this)">Видео</button>
-                            <button class="media-btn" onclick="switchMedia('efim', '3d', this)">3D-модель</button>
+                <div class="card media-card reveal">
+                    <div class="media-header">
+                        <div class="doc-icon">🎥</div>
+                        <div class="doc-info" style="flex: 1;">
+                            <h4>Медиа-приложение</h4>
+                            <p>Демонстрация работы SMD-установщика.</p>
                         </div>
                     </div>
                     
+                    <div class="media-toggle">
+                        <button class="media-btn active" onclick="switchMedia('efim', 'video', this)">Видео</button>
+                        <button class="media-btn" onclick="switchMedia('efim', '3d', this)">3D-модель</button>
+                    </div>
+                    
                     <div id="efim-video-container" class="media-container active">
-                        <video class="video-appendix" controls preload="metadata">
+                        <video class="video-appendix" controls preload="metadata" style="margin-top: 0;">
                             <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -610,20 +603,6 @@
         <p>© 2026 Портфолио выпускников НГТУ. Все права защищены.</p>
     </footer>
 
-    <!-- МОДАЛЬНОЕ ОКНО PDF -->
-    <div id="pdfModal" class="custom-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Диплом победителя «Студенческий стартап»</h3>
-                <button class="modal-close" onclick="document.getElementById('pdfModal').classList.remove('open')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <iframe src="docs/startup-diploma.pdf" title="Диплом"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- ПОДКЛЮЧЕНИЕ THREE.JS -->
     <script type="importmap">
     {
       "imports": {
@@ -720,8 +699,6 @@
 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 500);
-                
-                // Начальная позиция камеры (учитываем поворот)
                 camera.position.set(9, 7, 12);
 
                 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -743,13 +720,8 @@
                     'models/model.glb', // Путь к модели
                     (gltf) => {
                         const model = gltf.scene;
-                        
-                        // ═══════════ ПОВОРОТ МОДЕЛИ ═══════════
-                        // Math.PI = 180°, Math.PI / 2 = 90°
-                        // Если модель смотрит не так, поменяйте оси (x, y, z) или знаки (+/-)
                         model.rotation.x = Math.PI; 
-                        model.rotation.z = Math.PI / 2; // Разворот на 90 градусов
-                        
+                        model.rotation.z = Math.PI / 2; 
                         model.updateMatrixWorld(true);
 
                         const box = new THREE.Box3().setFromObject(model);
