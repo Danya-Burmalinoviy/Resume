@@ -282,6 +282,33 @@
         
         .video-appendix { width: 100%; border-radius: 12px; margin-top: 16px; border: 1px solid var(--border); background: #000; }
 
+        /* ═══════════ СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ ВИДЕО/3D ═══════════ */
+        .media-toggle {
+            display: inline-flex; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 20px; padding: 4px; margin-top: 10px;
+        }
+        .media-btn {
+            background: transparent; border: none; padding: 6px 14px;
+            font-size: 0.85rem; font-weight: 600; color: var(--text-light);
+            border-radius: 16px; cursor: pointer; transition: all 0.3s; font-family: inherit;
+        }
+        .media-btn.active {
+            background: var(--card-bg); color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .media-container { display: none; width: 100%; margin-top: 16px; }
+        .media-container.active { display: block; }
+        
+        .viewer-3d {
+            width: 100%; aspect-ratio: 16/9; border-radius: 12px;
+            border: 1px solid var(--border); background: #0b1220;
+            position: relative; overflow: hidden; cursor: grab;
+        }
+        .viewer-3d:active { cursor: grabbing; }
+        .viewer-3d .loading-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: var(--text-light); font-size: 0.9rem;
+        }
+
         /* Таймлайн */
         .timeline { position: relative; padding-left: 32px; }
         .timeline::before {
@@ -516,18 +543,41 @@
                         <a href="docs/python-certificate.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
+                
+                <!-- ═══════════ БЛОК С ПЕРЕКЛЮЧАТЕЛЕМ ВИДЕО/3D (ДАНИИЛ) ═══════════ -->
                 <div class="card doc-card reveal" style="flex-direction: column;">
-                    <div style="display: flex; gap: 20px; align-items: flex-start; width: 100%;">
-                        <div class="doc-icon">🎥</div>
-                        <div class="doc-info">
-                            <h4>Видео-приложение</h4>
-                            <p>Демонстрация работы SMD-установщика.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div style="display: flex; gap: 20px; align-items: flex-start;">
+                            <div class="doc-icon">🎥</div>
+                            <div class="doc-info">
+                                <h4>Медиа-приложение</h4>
+                                <p>Демонстрация работы SMD-установщика.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Переключатель -->
+                        <div class="media-toggle">
+                            <button class="media-btn active" onclick="switchMedia('dan', 'video', this)">Видео</button>
+                            <button class="media-btn" onclick="switchMedia('dan', '3d', this)">3D-модель</button>
                         </div>
                     </div>
-                    <video class="video-appendix" controls preload="metadata">
-                        <source src="video/diploma-machine-demo.mp4" type="video/mp4">
-                    </video>
+                    
+                    <!-- Контейнер с видео -->
+                    <div id="dan-video-container" class="media-container active">
+                        <video class="video-appendix" controls preload="metadata">
+                            <source src="video/diploma-machine-demo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <!-- Контейнер с 3D-моделью -->
+                    <div id="dan-3d-container" class="media-container">
+                        <div class="viewer-3d" id="dan-3d-viewer">
+                            <div class="loading-text">Загрузка 3D-модели...</div>
+                        </div>
+                    </div>
                 </div>
+                <!-- ═══════════ КОНЕЦ БЛОКА ═══════════ -->
+
             </div>
         </section>
 
@@ -702,20 +752,40 @@
                     </div>
                 </div>
                 
+                <!-- ═══════════ БЛОК С ПЕРЕКЛЮЧАТЕЛЕМ ВИДЕО/3D (ЕФИМ) ═══════════ -->
                 <div class="card doc-card reveal" style="flex-direction: column;">
-                    <div style="display: flex; gap: 20px; align-items: flex-start; width: 100%;">
-                        <div class="doc-icon">🎥</div>
-                        <div class="doc-info">
-                            <h4>Видео-приложение</h4>
-                            <p>Демонстрация работы SMD-установщика.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                        <div style="display: flex; gap: 20px; align-items: flex-start;">
+                            <div class="doc-icon">🎥</div>
+                            <div class="doc-info">
+                                <h4>Медиа-приложение</h4>
+                                <p>Демонстрация работы SMD-установщика.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Переключатель -->
+                        <div class="media-toggle">
+                            <button class="media-btn active" onclick="switchMedia('efim', 'video', this)">Видео</button>
+                            <button class="media-btn" onclick="switchMedia('efim', '3d', this)">3D-модель</button>
                         </div>
                     </div>
                     
-                    <video class="video-appendix" controls preload="metadata">
-                        <source src="video/diploma-machine-demo.mp4" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
-                    </video>
+                    <!-- Контейнер с видео -->
+                    <div id="efim-video-container" class="media-container active">
+                        <video class="video-appendix" controls preload="metadata">
+                            <source src="video/diploma-machine-demo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <!-- Контейнер с 3D-моделью -->
+                    <div id="efim-3d-container" class="media-container">
+                        <div class="viewer-3d" id="efim-3d-viewer">
+                            <div class="loading-text">Загрузка 3D-модели...</div>
+                        </div>
+                    </div>
                 </div>
+                <!-- ═══════════ КОНЕЦ БЛОКА ═══════════ -->
+
             </div>
         </section>
 
@@ -763,8 +833,18 @@
         </div>
     </div>
 
+    <!-- ПОДКЛЮЧЕНИЕ THREE.JS ДЛЯ 3D-МОДЕЛИ -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+
     <script>
-        // --- 1. Логика смены темы (как было) ---
+        // --- 1. Логика смены темы ---
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -787,7 +867,6 @@
         const navLinks = document.querySelectorAll('.nav-link');
 
         function switchProfile(profile, isInitialLoad = false) {
-            // Запоминаем выбор в localStorage
             localStorage.setItem('activeProfile', profile);
 
             if (profile === 'dan') {
@@ -816,12 +895,11 @@
                 navLinks[3].href = '#efim-experience';
             }
             
-            // Если это не первая загрузка, скроллим вверх при смене человека
             if (!isInitialLoad) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            initReveal(); // Перезапуск анимаций
+            initReveal(); 
         }
 
         // --- 3. Анимация появления блоков ---
@@ -841,10 +919,129 @@
                 observer.observe(el);
             });
         }
-        
-        // --- 4. Инициализация при загрузке страницы ---
+
+        // --- 4. Логика переключения Видео / 3D ---
+        function switchMedia(person, type, btn) {
+            // Сброс активных кнопок в этом блоке
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.media-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Скрываем оба контейнера
+            document.getElementById(`${person}-video-container`).classList.remove('active');
+            document.getElementById(`${person}-3d-container`).classList.remove('active');
+
+            // Показываем нужный и останавливаем видео, если уходим на 3D
+            if (type === 'video') {
+                document.getElementById(`${person}-video-container`).classList.add('active');
+            } else {
+                document.getElementById(`${person}-3d-container`).classList.add('active');
+                const video = document.querySelector(`#${person}-video-container video`);
+                if (video) video.pause();
+                
+                // Инициализируем 3D, если еще не инициализировали
+                if (!window[`init3D_${person}`]) {
+                    window[`init3D_${person}`] = true;
+                    initThreeJSViewer(`${person}-3d-viewer`);
+                }
+            }
+        }
+
+        // --- 5. Инициализация Three.js ---
+        async function initThreeJSViewer(containerId) {
+            try {
+                const THREE = await import('three');
+                const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+                const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                const loadingText = container.querySelector('.loading-text');
+                if (loadingText) loadingText.remove();
+
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 500);
+                camera.position.set(9, 7, 12);
+
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(w, h);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                container.appendChild(renderer.domElement);
+
+                const controls = new OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.07;
+                controls.autoRotate = true;
+                controls.autoRotateSpeed = 1.1;
+                controls.minDistance = 3;
+                controls.maxDistance = 50;
+
+                // Свет
+                scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+                const dir1 = new THREE.DirectionalLight(0xffffff, 1.6);
+                dir1.position.set(8, 14, 10);
+                scene.add(dir1);
+                const dir2 = new THREE.DirectionalLight(0x00F2FE, 0.7);
+                dir2.position.set(-8, 6, -8);
+                scene.add(dir2);
+
+                // Загрузка модели (файл должен лежать в папке models)
+                const loader = new GLTFLoader();
+                loader.load(
+                    'models/model.glb', // УКАЖИТЕ ТУТ ВАШЕ НАЗВАНИЕ ФАЙЛА (например, smd-machine.glb)
+                    (gltf) => {
+                        const model = gltf.scene;
+                        model.rotation.x = Math.PI; // Переворот, если модель лежит на боку
+                        model.updateMatrixWorld(true);
+
+                        // Автоцентрирование
+                        const box = new THREE.Box3().setFromObject(model);
+                        const size = box.getSize(new THREE.Vector3());
+                        const center = box.getCenter(new THREE.Vector3());
+                        const maxDim = Math.max(size.x, size.y, size.z);
+                        const scale = 8 / maxDim;
+                        
+                        model.scale.setScalar(scale);
+                        model.position.sub(center.multiplyScalar(scale));
+                        model.position.y += (size.y * scale) / 2 - 0.01;
+
+                        scene.add(model);
+
+                        const newBox = new THREE.Box3().setFromObject(model);
+                        const newSize = newBox.getSize(new THREE.Vector3());
+                        const dist = Math.max(newSize.x, newSize.y, newSize.z) * 1.8;
+                        camera.position.set(dist * 0.6, dist * 0.5, dist * 0.8);
+                        controls.target.set(0, newSize.y / 2, 0);
+                        controls.update();
+                    },
+                    undefined,
+                    (error) => {
+                        console.error('Ошибка загрузки модели:', error);
+                        const errorDiv = document.createElement('div');
+                        errorDiv.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:red;font-size:0.9rem;text-align:center;';
+                        errorDiv.innerHTML = '⚠ Не удалось загрузить модель.<br>Проверьте путь к файлу.';
+                        container.appendChild(errorDiv);
+                    }
+                );
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+
+            } catch (err) {
+                console.warn('Three.js не загрузился:', err);
+            }
+        }
+
+        // --- 6. Инициализация при загрузке страницы ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Проверяем, сохранен ли профиль в памяти (по умолчанию 'dan')
             const savedProfile = localStorage.getItem('activeProfile') || 'dan';
             switchProfile(savedProfile, true);
         });
