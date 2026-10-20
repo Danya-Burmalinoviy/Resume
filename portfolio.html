@@ -129,6 +129,7 @@
         .viewer-3d {
             width: 100%; height: 550px; border-radius: 12px; border: 1px solid var(--border); 
             background: #0b1220; position: relative; overflow: hidden; cursor: grab;
+            touch-action: none; /* Отключаем стандартный скролл на тач-устройствах */
         }
         .viewer-3d:active { cursor: grabbing; }
         .viewer-3d .loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-light); font-size: 0.9rem; }
@@ -678,7 +679,7 @@
             }
         }
 
-        // --- Three.js ---
+        // --- Three.js с плавным зумом ---
         async function initThreeJSViewer(containerId) {
             try {
                 const THREE = await import('three');
@@ -700,19 +701,73 @@
                 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 renderer.setSize(w, h);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.domElement.style.touchAction = 'none'; // Для тач-событий
                 container.appendChild(renderer.domElement);
+
+                // ═══ ПАРАМЕТРЫ ПЛАВНОГО ЗУМА ═══
+                let viewer = null;
+                let targetDist = 0;
+                const ZOOM_MIN = 3;
+                const ZOOM_MAX = 50;
+                const WHEEL_MAX_STEP = 0.06;   
+                const WHEEL_SENSITIVITY = 120; 
+                const ZOOM_LERP = 0.18;        
+
+                function clampDist(d) {
+                    return Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, d));
+                }
 
                 const controls = new OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true; 
-                
-                // ═══════════ ПЛАВНЫЙ ЗУМ ═══════════
-                controls.dampingFactor = 0.05; // Более мягкое скольжение
-                controls.zoomSpeed = 0.5;      // Уменьшаем скорость зума (плавнее)
-                controls.zoomToCursor = true;  // Зум направлен к курсору мыши
-                // ══════════════════════════════════
+                controls.dampingFactor = 0.08;
+                controls.autoRotate = true; 
+                controls.autoRotateSpeed = 1.1;
+                controls.rotateSpeed = 0.6;
+                controls.panSpeed = 0.6;
+                controls.enableZoom = false; // Отключаем встроенный зум
+                controls.minDistance = ZOOM_MIN;
+                controls.maxDistance = ZOOM_MAX;
+                controls.maxPolarAngle = Math.PI / 1.9;
+                controls.target.set(0, 0.5, 0);
 
-                controls.autoRotate = true; controls.autoRotateSpeed = 1.1;
-                controls.minDistance = 3; controls.maxDistance = 50;
+                targetDist = camera.position.distanceTo(controls.target);
+
+                // ═══ Свой плавный зум колесом ═══
+                renderer.domElement.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    const sign = Math.sign(e.deltaY);
+                    const mag = Math.min(1, Math.abs(e.deltaY) / WHEEL_SENSITIVITY);
+                    const step = WHEEL_MAX_STEP * mag * sign;
+                    targetDist = clampDist(targetDist * (1 + step));
+                }, { passive: false, capture: true });
+
+                // ═══ Свой pinch-to-zoom для тача ═══
+                let pinchStart = 0, pinchTargetStart = 0;
+                renderer.domElement.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 2) {
+                        pinchStart = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        pinchTargetStart = targetDist;
+                    }
+                }, { passive: true });
+
+                renderer.domElement.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 2 && pinchStart > 0) {
+                        e.preventDefault();
+                        const dist = Math.hypot(
+                            e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY
+                        );
+                        targetDist = clampDist(pinchTargetStart * (pinchStart / dist));
+                    }
+                }, { passive: false });
+
+                renderer.domElement.addEventListener('touchend', (e) => {
+                    if (e.touches.length < 2) pinchStart = 0;
+                }, { passive: true });
 
                 scene.add(new THREE.AmbientLight(0xffffff, 0.7));
                 const dir1 = new THREE.DirectionalLight(0xffffff, 1.6); dir1.position.set(8, 14, 10); scene.add(dir1);
@@ -720,16 +775,16 @@
 
                 const loader = new GLTFLoader();
                 loader.load(
-                    'models/model.glb', // Путь к модели
+                    'models/model.glb', 
                     (gltf) => {
                         const model = gltf.scene;
                         
-                        // ═══════════ ПОВОРОТ МОДЕЛИ ═══════════
+                        // ═══════════ ПОВОРОТ МОДЕЛИ (ОТНОСИТЕЛЬНО ОСИ OZ) ═══════════
+                        model.rotation.set(0, 0, 0); 
                         model.rotation.x = Math.PI; 
-                        // Поворот влево на 90 градусов по оси Y
-                        model.rotation.y = Math.PI / 2; 
-                        model.rotation.z = Math.PI / 2;
-                        // ══════════════════════════════════════
+                        // Поворот вокруг оси Z на 90 градусов
+                        model.rotation.z = Math.PI / 2; 
+                        // ════════════════════════════════════════════════════════════
 
                         model.updateMatrixWorld(true);
 
@@ -751,6 +806,15 @@
                         camera.position.set(dist * 0.6, dist * 0.5, dist * 0.8);
                         controls.target.set(0, newSize.y / 2, 0);
                         controls.update();
+                        
+                        targetDist = clampDist(camera.position.distanceTo(controls.target));
+
+                        if (gltf.animations && gltf.animations.length) {
+                            const mixer = new THREE.AnimationMixer(model);
+                            gltf.animations.forEach((clip) => mixer.clipAction(clip).play());
+                            viewer = viewer || {};
+                            viewer.mixer = mixer;
+                        }
                     },
                     undefined,
                     (error) => {
@@ -762,7 +826,26 @@
                     }
                 );
 
-                function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
+                function animate() {
+                    requestAnimationFrame(animate);
+                    if (viewer && viewer.mixer) viewer.mixer.update(0.016);
+                    
+                    controls.update();
+
+                    // ═══ Интерполяция для плавного зума ═══
+                    if (targetDist > 0) {
+                        const tmpOffset = new THREE.Vector3().subVectors(camera.position, controls.target);
+                        const currentDist = tmpOffset.length();
+                        const diff = targetDist - currentDist;
+                        if (Math.abs(diff) > 0.005) {
+                            const newDist = currentDist + diff * ZOOM_LERP;
+                            tmpOffset.normalize().multiplyScalar(newDist);
+                            camera.position.copy(controls.target).add(tmpOffset);
+                        }
+                    }
+
+                    renderer.render(scene, camera);
+                }
                 animate();
 
             } catch (err) { console.warn('Three.js не загрузился:', err); }
