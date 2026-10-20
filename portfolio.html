@@ -328,7 +328,6 @@
                     </div>
                 </div>
                 
-                <!-- Диплом Python (на всю ширину) -->
                 <div class="card doc-card reveal" style="grid-column: span 2;">
                     <div class="doc-icon">🐍</div>
                     <div class="doc-info">
@@ -338,7 +337,6 @@
                     </div>
                 </div>
                 
-                <!-- МЕДИА КАРТОЧКА (Даниил) -->
                 <div class="card media-card reveal">
                     <div class="media-header">
                         <div class="doc-icon">🎥</div>
@@ -531,7 +529,6 @@
                     </div>
                 </div>
                 
-                <!-- Диплом Python (на всю ширину) -->
                 <div class="card doc-card reveal" style="grid-column: span 2;">
                     <div class="doc-icon">🐍</div>
                     <div class="doc-info">
@@ -541,7 +538,6 @@
                     </div>
                 </div>
                 
-                <!-- МЕДИА КАРТОЧКА (Ефим) -->
                 <div class="card media-card reveal">
                     <div class="media-header">
                         <div class="doc-icon">🎥</div>
@@ -707,7 +703,14 @@
                 container.appendChild(renderer.domElement);
 
                 const controls = new OrbitControls(camera, renderer.domElement);
-                controls.enableDamping = true; controls.dampingFactor = 0.07;
+                controls.enableDamping = true; 
+                
+                // ═══════════ ПЛАВНЫЙ ЗУМ ═══════════
+                controls.dampingFactor = 0.05; // Более мягкое скольжение
+                controls.zoomSpeed = 0.5;      // Уменьшаем скорость зума (плавнее)
+                controls.zoomToCursor = true;  // Зум направлен к курсору мыши
+                // ══════════════════════════════════
+
                 controls.autoRotate = true; controls.autoRotateSpeed = 1.1;
                 controls.minDistance = 3; controls.maxDistance = 50;
 
@@ -720,8 +723,13 @@
                     'models/model.glb', // Путь к модели
                     (gltf) => {
                         const model = gltf.scene;
+                        
+                        // ═══════════ ПОВОРОТ МОДЕЛИ ═══════════
                         model.rotation.x = Math.PI; 
-                        model.rotation.z = Math.PI / 2; 
+                        // Поворот влево на 90 градусов по оси Y
+                        model.rotation.y = Math.PI / 2; 
+                        // ══════════════════════════════════════
+
                         model.updateMatrixWorld(true);
 
                         const box = new THREE.Box3().setFromObject(model);
