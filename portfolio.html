@@ -8,53 +8,347 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <style>
-        /* ... (CSS остается без изменений, я не буду его дублировать, чтобы не тратить ваше время, он точно такой же, как в прошлом сообщении) ... */
+        /* ═══════════ БАЗОВЫЕ ПЕРЕМЕННЫЕ И ТЕМЫ ═══════════ */
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #4A9BF5;
+            --accent: #00BCD4;
+            --accent-soft: #E0F7FA;
+            --bg: #F5F9FF;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --text: #1E293B;
+            --text-light: #64748B;
+            --heading: #0F1F3D;
+            --border: #DCE7F5;
+            --shadow: 0 6px 22px rgba(26, 115, 232, 0.10);
+            --shadow-hover: 0 14px 34px rgba(26, 115, 232, 0.18);
+            --radius: 14px;
+            --gradient: linear-gradient(135deg, #1a73e8 0%, #4A9BF5 100%);
+            --gradient-accent: linear-gradient(135deg, #00BCD4 0%, #1a73e8 100%);
+            --hero-bg: linear-gradient(135deg, #EAF2FE 0%, #F5F9FF 60%, #E0F7FA 100%);
+            --header-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --primary: #4FACFE;
+            --primary-dark: #00F2FE;
+            --primary-light: #7DD3FC;
+            --accent: #00F2FE;
+            --accent-soft: #0F2937;
+            --bg: #0F172A;
+            --white: #1E293B;
+            --card-bg: #1E293B;
+            --text: #E2E8F0;
+            --text-light: #94A3B8;
+            --heading: #F1F5F9;
+            --border: #334155;
+            --shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 14px 34px rgba(0, 242, 254, 0.15);
+            --gradient: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+            --gradient-accent: linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%);
+            --hero-bg: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #0F2937 100%);
+            --header-bg: #0F172A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════ ШАПКА ═══════════ */
+        .header {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .header-inner {
+            max-width: 1200px; margin: 0 auto; padding: 0 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px;
+        }
         
-        /* Для экономии места я скрыл CSS, но в вашем файле он должен быть! */
-        :root { --primary: #1a73e8; --primary-dark: #1557b0; --primary-light: #4A9BF5; --accent: #00BCD4; --accent-soft: #E0F7FA; --bg: #F5F9FF; --white: #ffffff; --card-bg: #ffffff; --text: #1E293B; --text-light: #64748B; --heading: #0F1F3D; --border: #DCE7F5; --shadow: 0 6px 22px rgba(26, 115, 232, 0.10); --shadow-hover: 0 14px 34px rgba(26, 115, 232, 0.18); --radius: 14px; --gradient: linear-gradient(135deg, #1a73e8 0%, #4A9BF5 100%); --gradient-accent: linear-gradient(135deg, #00BCD4 0%, #1a73e8 100%); --hero-bg: linear-gradient(135deg, #EAF2FE 0%, #F5F9FF 60%, #E0F7FA 100%); --header-bg: #ffffff; }
-        [data-theme="dark"] { --primary: #4FACFE; --primary-dark: #00F2FE; --primary-light: #7DD3FC; --accent: #00F2FE; --accent-soft: #0F2937; --bg: #0F172A; --white: #1E293B; --card-bg: #1E293B; --text: #E2E8F0; --text-light: #94A3B8; --heading: #F1F5F9; --border: #334155; --shadow: 0 6px 22px rgba(0, 0, 0, 0.35); --shadow-hover: 0 14px 34px rgba(0, 242, 254, 0.15); --gradient: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%); --gradient-accent: linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%); --hero-bg: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #0F2937 100%); --header-bg: #0F172A; }
-        * { margin: 0; padding: 0; box-sizing: border-box; } html { scroll-behavior: smooth; scroll-padding-top: 90px; } body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; transition: background-color 0.3s, color 0.3s; overflow-x: hidden; }
-        .header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 16px 0; position: fixed; top: 0; left: 0; right: 0; z-index: 100; box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05); transition: background-color 0.3s, border-color 0.3s; }
-        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-        .logo { text-decoration: none; display: flex; align-items: center; gap: 12px; } .logo-mark { width: 40px; height: 40px; border-radius: 10px; background: var(--gradient); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3); } .logo-text { font-weight: 800; font-size: 1.1rem; color: var(--heading); transition: color 0.3s; }
-        .nav { display: flex; align-items: center; gap: 24px; } .nav-links { display: flex; gap: 20px; } .nav-links a { text-decoration: none; color: var(--text-light); font-weight: 600; font-size: 0.95rem; transition: color 0.2s; } .nav-links a:hover { color: var(--primary); }
-        .profile-switch { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px; transition: background 0.3s; } .profile-btn { background: transparent; border: none; padding: 6px 16px; font-size: 0.9rem; font-weight: 700; color: var(--text-light); border-radius: 20px; cursor: pointer; transition: all 0.3s; font-family: inherit; } .profile-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .theme-toggle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border); background: var(--card-bg); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.25s ease; } .theme-toggle:hover { border-color: var(--primary); transform: rotate(15deg) scale(1.08); }
-        .hero { background: var(--hero-bg); padding: 160px 24px 80px; position: relative; overflow: hidden; transition: background 0.3s; } .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,188,212,0.15) 0%, transparent 70%); border-radius: 50%; }
-        .hero-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 1; }
-        .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(26, 115, 232, 0.1); color: var(--primary); padding: 8px 16px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; } .badge::before { content: ''; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 8px var(--primary); }
-        .hero-text h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 16px; color: var(--heading); transition: color 0.3s; } .hero-text h1 span { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-role { font-size: 1.2rem; font-weight: 600; color: var(--primary); margin-bottom: 20px; } .hero-desc { font-size: 1.05rem; color: var(--text-light); margin: 0 auto 30px; max-width: 800px; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; border-top: 1px solid var(--border); padding-top: 24px; width: 100%; max-width: 800px; margin: 0 auto; } .stat-item b { display: block; font-size: 1.6rem; font-weight: 800; color: var(--heading); } .stat-item span { font-size: 0.85rem; color: var(--text-light); font-weight: 500; }
-        .section { max-width: 1100px; margin: 0 auto; padding: 80px 24px; } .section-title { font-size: 2.2rem; font-weight: 800; color: var(--heading); margin-bottom: 40px; position: relative; display: inline-block; } .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--gradient-accent); border-radius: 2px; margin-top: 10px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; position: relative; overflow: hidden; } .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); }
-        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; } .about-text p { font-size: 1.05rem; color: var(--text-light); margin-bottom: 16px; } .about-text p b { color: var(--text); }
-        .info-list { display: flex; flex-direction: column; gap: 16px; } .info-row { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border); padding-bottom: 12px; font-size: 0.95rem; } .info-row:last-child { border-bottom: none; padding-bottom: 0; } .info-row span:first-child { color: var(--text-light); } .info-row span:last-child { font-weight: 700; color: var(--heading); text-align: right; }
-        .skills-card { text-align: center; padding: 60px 30px; } .skills-card p { color: var(--text-light); font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; } .skills-card h3 { font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1.6; }
-        .edu-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; } .edu-main h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--heading); } .edu-faculty { color: var(--primary); font-weight: 600; margin-bottom: 16px; }
-        .edu-meta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; } .edu-meta div { display: flex; gap: 10px; } .edu-meta b { min-width: 140px; color: var(--text-light); font-weight: 500; }
-        .edu-diploma { background: var(--gradient); color: #fff; border: none; display: flex; flex-direction: column; justify-content: center; gap: 12px; } .edu-diploma b { font-size: 3rem; font-weight: 800; line-height: 1; } .edu-diploma hr { border: 0; border-top: 1px solid rgba(255,255,255,0.3); margin: 10px 0; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; } .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .card-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3); }
-        .project-card { text-decoration: none; display: flex; flex-direction: column; } .project-card .btn { margin-top: auto; align-self: flex-start; display: inline-block; padding: 10px 24px; background: var(--gradient); color: #fff; border-radius: 30px; font-weight: 700; font-size: 0.9rem; transition: transform 0.2s, box-shadow 0.2s; } .project-card .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26, 115, 232, 0.4); }
-        .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 24px; } .tag { background: var(--bg); border: 1px solid var(--border); padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: 600; color: var(--text-light); }
-        .doc-card { display: flex; align-items: flex-start; gap: 20px; } .doc-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--accent-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
-        .doc-info h4 { font-size: 1.1rem; margin-bottom: 4px; color: var(--heading); } .doc-info p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 12px; } .doc-link { font-size: 0.9rem; font-weight: 700; color: var(--primary); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; } .doc-link:hover { text-decoration: underline; }
+        .logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
+        .logo-mark {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--gradient); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.1rem; letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+        }
+        .logo-text {
+            font-weight: 800; font-size: 1.1rem; color: var(--heading);
+            transition: color 0.3s;
+        }
+
+        .nav { display: flex; align-items: center; gap: 24px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-light);
+            font-weight: 600; font-size: 0.95rem; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Переключатель профилей */
+        .profile-switch {
+            display: flex; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 30px; padding: 4px; transition: background 0.3s;
+        }
+        .profile-btn {
+            background: transparent; border: none; padding: 6px 16px;
+            font-size: 0.9rem; font-weight: 700; color: var(--text-light);
+            border-radius: 20px; cursor: pointer; transition: all 0.3s;
+            font-family: inherit;
+        }
+        .profile-btn.active {
+            background: var(--card-bg); color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .theme-toggle {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 2px solid var(--border); background: var(--card-bg);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: all 0.25s ease;
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary); transform: rotate(15deg) scale(1.08);
+        }
+
+        /* ═══════════ HERO ═══════════ */
+        .hero {
+            background: var(--hero-bg); padding: 160px 24px 80px;
+            position: relative; overflow: hidden; transition: background 0.3s;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0,188,212,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .hero-inner {
+            max-width: 900px; margin: 0 auto; display: flex;
+            flex-direction: column; align-items: center; text-align: center;
+            position: relative; z-index: 1;
+        }
+        
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(26, 115, 232, 0.1); color: var(--primary);
+            padding: 8px 16px; border-radius: 30px; font-size: 0.85rem;
+            font-weight: 700; margin-bottom: 20px; text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge::before {
+            content: ''; width: 8px; height: 8px; background: var(--primary);
+            border-radius: 50%; box-shadow: 0 0 8px var(--primary);
+        }
+        .hero-text h1 {
+            font-size: 3.5rem; font-weight: 800; line-height: 1.1;
+            margin-bottom: 16px; color: var(--heading); transition: color 0.3s;
+        }
+        .hero-text h1 span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-role {
+            font-size: 1.2rem; font-weight: 600; color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .hero-desc {
+            font-size: 1.05rem; color: var(--text-light); margin: 0 auto 30px;
+            max-width: 800px;
+        }
+        
+        .stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+            border-top: 1px solid var(--border); padding-top: 24px;
+            width: 100%; max-width: 800px; margin: 0 auto;
+        }
+        .stat-item b {
+            display: block; font-size: 1.6rem; font-weight: 800; color: var(--heading);
+        }
+        .stat-item span {
+            font-size: 0.85rem; color: var(--text-light); font-weight: 500;
+        }
+
+        /* ═══════════ СЕКЦИИ И КАРТОЧКИ ═══════════ */
+        .section { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+        .section-title {
+            font-size: 2.2rem; font-weight: 800; color: var(--heading);
+            margin-bottom: 40px; position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 4px;
+            background: var(--gradient-accent); border-radius: 2px; margin-top: 10px;
+        }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-6px); box-shadow: var(--shadow-hover);
+            border-color: var(--primary-light);
+        }
+
+        /* Обо мне */
+        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; }
+        .about-text p { font-size: 1.05rem; color: var(--text-light); margin-bottom: 16px; }
+        .about-text p b { color: var(--text); }
+        .info-list { display: flex; flex-direction: column; gap: 16px; }
+        .info-row {
+            display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border);
+            padding-bottom: 12px; font-size: 0.95rem;
+        }
+        .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .info-row span:first-child { color: var(--text-light); }
+        .info-row span:last-child { font-weight: 700; color: var(--heading); text-align: right; }
+
+        /* Навыки */
+        .skills-card { text-align: center; padding: 60px 30px; }
+        .skills-card p { color: var(--text-light); font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .skills-card h3 { font-size: 1.8rem; font-weight: 800; color: var(--primary); line-height: 1.6; }
+
+        /* Образование */
+        .edu-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .edu-main h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--heading); }
+        .edu-faculty { color: var(--primary); font-weight: 600; margin-bottom: 16px; }
+        .edu-meta { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; }
+        .edu-meta div { display: flex; gap: 10px; }
+        .edu-meta b { min-width: 140px; color: var(--text-light); font-weight: 500; }
+        .edu-diploma {
+            background: var(--gradient); color: #fff; border: none;
+            display: flex; flex-direction: column; justify-content: center; gap: 12px;
+        }
+        .edu-diploma b { font-size: 3rem; font-weight: 800; line-height: 1; }
+        .edu-diploma hr { border: 0; border-top: 1px solid rgba(255,255,255,0.3); margin: 10px 0; }
+
+        /* Достижения и Проекты */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        
+        .card-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            background: var(--gradient); display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 20px; box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+        }
+        
+        .project-card { text-decoration: none; display: flex; flex-direction: column; }
+        .project-card .btn {
+            margin-top: auto; align-self: flex-start; display: inline-block;
+            padding: 10px 24px; background: var(--gradient); color: #fff;
+            border-radius: 30px; font-weight: 700; font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .project-card .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26, 115, 232, 0.4); }
+
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; margin-bottom: 24px; }
+        .tag {
+            background: var(--bg); border: 1px solid var(--border);
+            padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Документы */
+        .doc-card { display: flex; align-items: flex-start; gap: 20px; }
+        .doc-icon {
+            width: 48px; height: 48px; border-radius: 12px; background: var(--accent-soft);
+            color: var(--primary); display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; flex-shrink: 0;
+        }
+        .doc-info h4 { font-size: 1.1rem; margin-bottom: 4px; color: var(--heading); }
+        .doc-info p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 12px; }
+        .doc-link {
+            font-size: 0.9rem; font-weight: 700; color: var(--primary);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .doc-link:hover { text-decoration: underline; }
+        
         .video-appendix { width: 100%; border-radius: 12px; margin-top: 16px; border: 1px solid var(--border); background: #000; }
-        .timeline { position: relative; padding-left: 32px; } .timeline::before { content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
-        .timeline-item { position: relative; margin-bottom: 40px; } .timeline-item::before { content: ''; position: absolute; left: -32px; top: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--card-bg); border: 3px solid var(--primary); box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15); }
-        .timeline-date { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; } .timeline-item h3 { font-size: 1.2rem; margin: 8px 0 4px; color: var(--heading); } .timeline-company { font-size: 0.95rem; font-weight: 600; color: var(--text-light); margin-bottom: 12px; }
-        .timeline-item ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; } .timeline-item li { position: relative; padding-left: 20px; color: var(--text); } .timeline-item li::before { content: ''; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--primary-light); }
-        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; } .reveal.visible { opacity: 1; transform: translateY(0); } .hidden-main { display: none !important; }
-        .custom-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; } .custom-modal.open { display: flex; }
-        .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 900px; height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-hover); }
-        .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--accent-soft); } .modal-header h3 { font-size: 1.1rem; color: var(--heading); }
-        .modal-close { background: transparent; border: none; font-size: 2rem; cursor: pointer; color: var(--text-light); line-height: 1; transition: color 0.2s; } .modal-close:hover { color: #dc2626; } .modal-body { flex: 1; background: #525659; } .modal-body iframe { width: 100%; height: 100%; border: none; }
-        @media (max-width: 992px) { .hero-text h1 { font-size: 2.5rem; } .stats { grid-template-columns: repeat(2, 1fr); } .about-grid, .edu-grid, .grid-3, .grid-2 { grid-template-columns: 1fr; } .nav-links { display: none; } }
+
+        /* Таймлайн */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px;
+            width: 2px; background: var(--border);
+        }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -32px; top: 6px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: var(--card-bg); border: 3px solid var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15);
+        }
+        .timeline-date { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        .timeline-item h3 { font-size: 1.2rem; margin: 8px 0 4px; color: var(--heading); }
+        .timeline-company { font-size: 0.95rem; font-weight: 600; color: var(--text-light); margin-bottom: 12px; }
+        .timeline-item ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+        .timeline-item li { position: relative; padding-left: 20px; color: var(--text); }
+        .timeline-item li::before {
+            content: ''; position: absolute; left: 0; top: 9px; width: 6px; height: 6px;
+            border-radius: 50%; background: var(--primary-light);
+        }
+
+        /* ═══════════ АНИМАЦИИ ПОЯВЛЕНИЯ ═══════════ */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        .hidden-main { display: none !important; }
+
+        /* ═══════════ МОДАЛЬНЫЕ ОКНА ═══════════ */
+        .custom-modal {
+            display: none; position: fixed; inset: 0; z-index: 999;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .custom-modal.open { display: flex; }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: var(--radius); width: 100%; max-width: 900px; height: 85vh;
+            display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-hover);
+        }
+        .modal-header {
+            padding: 16px 20px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--accent-soft);
+        }
+        .modal-header h3 { font-size: 1.1rem; color: var(--heading); }
+        .modal-close {
+            background: transparent; border: none; font-size: 2rem; cursor: pointer;
+            color: var(--text-light); line-height: 1; transition: color 0.2s;
+        }
+        .modal-close:hover { color: #dc2626; }
+        .modal-body { flex: 1; background: #525659; }
+        .modal-body iframe { width: 100%; height: 100%; border: none; }
+
+        /* Адаптив */
+        @media (max-width: 992px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .about-grid, .edu-grid, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- ═══════════ ШАПКА ═══════════ -->
     <header class="header">
         <div class="header-inner">
             <a href="#" class="logo" id="logoLink">
@@ -408,7 +702,6 @@
                     </div>
                 </div>
                 
-                <!-- ОБЩЕЕ ВИДЕО ДЛЯ ЕФИМА -->
                 <div class="card doc-card reveal" style="flex-direction: column;">
                     <div style="display: flex; gap: 20px; align-items: flex-start; width: 100%;">
                         <div class="doc-icon">🎥</div>
@@ -419,7 +712,6 @@
                     </div>
                     
                     <video class="video-appendix" controls preload="metadata">
-                        <!-- Ссылка на тот же файл, что и у Даниила -->
                         <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
@@ -472,6 +764,7 @@
     </div>
 
     <script>
+        // --- 1. Логика смены темы (как было) ---
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -484,6 +777,7 @@
             else { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); themeToggle.textContent = '☀️'; }
         });
 
+        // --- 2. Логика переключения профилей с запоминанием ---
         const mainDan = document.getElementById('main-dan');
         const mainEfim = document.getElementById('main-efim');
         const btnDan = document.getElementById('btn-dan');
@@ -492,7 +786,10 @@
         const logoName = document.getElementById('logoName');
         const navLinks = document.querySelectorAll('.nav-link');
 
-        function switchProfile(profile) {
+        function switchProfile(profile, isInitialLoad = false) {
+            // Запоминаем выбор в localStorage
+            localStorage.setItem('activeProfile', profile);
+
             if (profile === 'dan') {
                 mainDan.classList.remove('hidden-main');
                 mainEfim.classList.add('hidden-main');
@@ -500,6 +797,7 @@
                 btnEfim.classList.remove('active');
                 logoMark.textContent = 'ДЕ';
                 logoName.textContent = 'Даниил Емельянов';
+                
                 navLinks[0].href = '#dan-about';
                 navLinks[1].href = '#dan-education';
                 navLinks[2].href = '#dan-portfolio';
@@ -511,15 +809,22 @@
                 btnDan.classList.remove('active');
                 logoMark.textContent = 'ЕЕ';
                 logoName.textContent = 'Ефим Емельянов';
+                
                 navLinks[0].href = '#efim-about';
                 navLinks[1].href = '#efim-education';
                 navLinks[2].href = '#efim-portfolio';
                 navLinks[3].href = '#efim-experience';
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            initReveal();
+            
+            // Если это не первая загрузка, скроллим вверх при смене человека
+            if (!isInitialLoad) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            initReveal(); // Перезапуск анимаций
         }
 
+        // --- 3. Анимация появления блоков ---
         function initReveal() {
             const reveals = document.querySelectorAll('.reveal:not(.hidden-main *)');
             const observer = new IntersectionObserver((entries) => {
@@ -530,10 +835,19 @@
                     }
                 });
             }, { threshold: 0.1 });
-            reveals.forEach(el => { el.classList.remove('visible'); observer.observe(el); });
+            
+            reveals.forEach(el => {
+                el.classList.remove('visible');
+                observer.observe(el);
+            });
         }
         
-        document.addEventListener('DOMContentLoaded', initReveal);
+        // --- 4. Инициализация при загрузке страницы ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Проверяем, сохранен ли профиль в памяти (по умолчанию 'dan')
+            const savedProfile = localStorage.getItem('activeProfile') || 'dan';
+            switchProfile(savedProfile, true);
+        });
     </script>
 </body>
 </html>
