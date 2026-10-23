@@ -118,19 +118,12 @@
         /* ═══════════ СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ ВИДЕО/3D ═══════════ */
         .media-card { grid-column: span 2; display: flex; flex-direction: column; }
         .media-header { display: flex; gap: 20px; align-items: flex-start; width: 100%; margin-bottom: 20px; }
-        
         .media-toggle { display: inline-flex; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px; margin-bottom: 20px; align-self: flex-start; }
         .media-btn { background: transparent; border: none; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; color: var(--text-light); border-radius: 16px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
         .media-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        
         .media-container { display: none; width: 100%; }
         .media-container.active { display: block; }
-        
-        .viewer-3d {
-            width: 100%; height: 550px; border-radius: 12px; border: 1px solid var(--border); 
-            background: #0b1220; position: relative; overflow: hidden; cursor: grab;
-            touch-action: none; /* Отключаем стандартный скролл на тач-устройствах */
-        }
+        .viewer-3d { width: 100%; height: 550px; border-radius: 12px; border: 1px solid var(--border); background: #0b1220; position: relative; overflow: hidden; cursor: grab; touch-action: none; }
         .viewer-3d:active { cursor: grabbing; }
         .viewer-3d .loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--text-light); font-size: 0.9rem; }
 
@@ -172,7 +165,6 @@
 </head>
 <body>
 
-    <!-- ═══════════ ШАПКА ═══════════ -->
     <header class="header">
         <div class="header-inner">
             <a href="#" class="logo" id="logoLink">
@@ -195,14 +187,14 @@
         </div>
     </header>
 
-    <!-- ═══════════ ПРОФИЛЬ 1: ДАНИИЛ ═══════════ -->
+    <!-- ПРОФИЛЬ 1: ДАНИИЛ -->
     <main id="main-dan">
         <section class="hero" id="hero-dan">
             <div class="hero-inner">
                 <div class="hero-text">
                     <span class="badge">Открыт к предложениям</span>
                     <h1>Даниил <span>Емельянов</span></h1>
-                    <div class="hero-role">Инженер-технолог · Антенны и СВЧ · Проектирование SMD-оборудования</div>
+                    <div class="hero-role">Инженер-конструктор · Антенны и СВЧ · Проектирование SMD-оборудования</div>
                     <p class="hero-desc">
                         Выпускник радиотехнического факультета (РЭФ) 2025 года. Занимаюсь проектированием антенно-фидерных устройств, разработкой печатных плат и встраиваемых систем. Победитель СтудСтартап 2025.
                     </p>
@@ -312,6 +304,16 @@
 
             <h3 style="margin: 40px 0 20px; font-size: 1.5rem; color: var(--heading);" class="reveal">Документы</h3>
             <div class="grid-2">
+                <!-- ДОБАВЛЕНА КНОПКА РЕЗЮМЕ ДАНИИЛА -->
+                <div class="card doc-card reveal" style="grid-column: span 2;">
+                    <div class="doc-icon">📝</div>
+                    <div class="doc-info">
+                        <h4>Резюме (PDF)</h4>
+                        <p>Краткая выжимка опыта, навыков и достижений.</p>
+                        <a href="resume-daniil.html" target="_blank" class="doc-link">⬇️ Открыть и скачать PDF</a>
+                    </div>
+                </div>
+
                 <div class="card doc-card reveal">
                     <div class="doc-icon">📄</div>
                     <div class="doc-info">
@@ -328,7 +330,6 @@
                         <a href="docs/diploma-appendix.pdf" download class="doc-link">⬇️ Скачать PDF</a>
                     </div>
                 </div>
-                
                 <div class="card doc-card reveal" style="grid-column: span 2;">
                     <div class="doc-icon">🐍</div>
                     <div class="doc-info">
@@ -346,25 +347,21 @@
                             <p>Демонстрация работы SMD-установщика.</p>
                         </div>
                     </div>
-                    
                     <div class="media-toggle">
                         <button class="media-btn active" onclick="switchMedia('dan', 'video', this)">Видео</button>
                         <button class="media-btn" onclick="switchMedia('dan', '3d', this)">3D-модель</button>
                     </div>
-                    
                     <div id="dan-video-container" class="media-container active">
                         <video class="video-appendix" controls preload="metadata" style="margin-top: 0;">
                             <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         </video>
                     </div>
-
                     <div id="dan-3d-container" class="media-container">
                         <div class="viewer-3d" id="dan-3d-viewer">
                             <div class="loading-text">Загрузка 3D-модели...</div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -396,14 +393,14 @@
         </section>
     </main>
 
-    <!-- ═══════════ ПРОФИЛЬ 2: ЕФИМ ═══════════ -->
+    <!-- ПРОФИЛЬ 2: ЕФИМ -->
     <main id="main-efim" class="hidden-main">
         <section class="hero" id="hero-efim">
             <div class="hero-inner">
                 <div class="hero-text">
                     <span class="badge">Открыт к предложениям</span>
                     <h1>Ефим <span>Емельянов</span></h1>
-                    <div class="hero-role">Инженер-технолог · Антенны и СВЧ · Проектирование SMD-оборудования</div>
+                    <div class="hero-role">Инженер-конструктор · Антенны и СВЧ · Проектирование SMD-оборудования</div>
                     <p class="hero-desc">
                         Выпускник радиотехнического факультета (РЭФ) 2025 года. Занимаюсь проектированием антенно-фидерных устройств, разработкой печатных плат и встраиваемых систем. Победитель СтудСтартап 2025.
                     </p>
@@ -513,6 +510,16 @@
 
             <h3 style="margin: 40px 0 20px; font-size: 1.5rem; color: var(--heading);" class="reveal">Документы</h3>
             <div class="grid-2">
+                <!-- ДОБАВЛЕНА КНОПКА РЕЗЮМЕ ЕФИМА -->
+                <div class="card doc-card reveal" style="grid-column: span 2;">
+                    <div class="doc-icon">📝</div>
+                    <div class="doc-info">
+                        <h4>Резюме (PDF)</h4>
+                        <p>Краткая выжимка опыта, навыков и достижений.</p>
+                        <a href="resume-efim.html" target="_blank" class="doc-link">⬇️ Открыть и скачать PDF</a>
+                    </div>
+                </div>
+
                 <div class="card doc-card reveal">
                     <div class="doc-icon">📄</div>
                     <div class="doc-info">
@@ -547,25 +554,21 @@
                             <p>Демонстрация работы SMD-установщика.</p>
                         </div>
                     </div>
-                    
                     <div class="media-toggle">
                         <button class="media-btn active" onclick="switchMedia('efim', 'video', this)">Видео</button>
                         <button class="media-btn" onclick="switchMedia('efim', '3d', this)">3D-модель</button>
                     </div>
-                    
                     <div id="efim-video-container" class="media-container active">
                         <video class="video-appendix" controls preload="metadata" style="margin-top: 0;">
                             <source src="video/diploma-machine-demo.mp4" type="video/mp4">
                         </video>
                     </div>
-
                     <div id="efim-3d-container" class="media-container">
                         <div class="viewer-3d" id="efim-3d-viewer">
                             <div class="loading-text">Загрузка 3D-модели...</div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -599,6 +602,19 @@
     <footer style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-light); font-size: 0.9rem;">
         <p>© 2026 Портфолио выпускников НГТУ. Все права защищены.</p>
     </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО PDF -->
+    <div id="pdfModal" class="custom-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Диплом победителя «Студенческий стартап»</h3>
+                <button class="modal-close" onclick="document.getElementById('pdfModal').classList.remove('open')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe src="docs/startup-diploma.pdf" title="Диплом"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script type="importmap">
     {
@@ -679,7 +695,7 @@
             }
         }
 
-        // --- Three.js с плавным зумом ---
+        // --- Three.js ---
         async function initThreeJSViewer(containerId) {
             try {
                 const THREE = await import('three');
@@ -701,21 +717,15 @@
                 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 renderer.setSize(w, h);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                renderer.domElement.style.touchAction = 'none'; // Для тач-событий
+                renderer.domElement.style.touchAction = 'none';
                 container.appendChild(renderer.domElement);
 
-                // ═══ ПАРАМЕТРЫ ПЛАВНОГО ЗУМА ═══
                 let viewer = null;
                 let targetDist = 0;
-                const ZOOM_MIN = 3;
-                const ZOOM_MAX = 50;
-                const WHEEL_MAX_STEP = 0.06;   
-                const WHEEL_SENSITIVITY = 120; 
-                const ZOOM_LERP = 0.18;        
+                const ZOOM_MIN = 3, ZOOM_MAX = 50;
+                const WHEEL_MAX_STEP = 0.06, WHEEL_SENSITIVITY = 120, ZOOM_LERP = 0.18;
 
-                function clampDist(d) {
-                    return Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, d));
-                }
+                const clampDist = (d) => Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, d));
 
                 const controls = new OrbitControls(camera, renderer.domElement);
                 controls.enableDamping = true; 
@@ -724,7 +734,7 @@
                 controls.autoRotateSpeed = 1.1;
                 controls.rotateSpeed = 0.6;
                 controls.panSpeed = 0.6;
-                controls.enableZoom = false; // Отключаем встроенный зум
+                controls.enableZoom = false;
                 controls.minDistance = ZOOM_MIN;
                 controls.maxDistance = ZOOM_MAX;
                 controls.maxPolarAngle = Math.PI / 1.9;
@@ -732,24 +742,17 @@
 
                 targetDist = camera.position.distanceTo(controls.target);
 
-                // ═══ Свой плавный зум колесом ═══
                 renderer.domElement.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
+                    e.preventDefault(); e.stopImmediatePropagation();
                     const sign = Math.sign(e.deltaY);
                     const mag = Math.min(1, Math.abs(e.deltaY) / WHEEL_SENSITIVITY);
-                    const step = WHEEL_MAX_STEP * mag * sign;
-                    targetDist = clampDist(targetDist * (1 + step));
+                    targetDist = clampDist(targetDist * (1 + WHEEL_MAX_STEP * mag * sign));
                 }, { passive: false, capture: true });
 
-                // ═══ Свой pinch-to-zoom для тача ═══
                 let pinchStart = 0, pinchTargetStart = 0;
                 renderer.domElement.addEventListener('touchstart', (e) => {
                     if (e.touches.length === 2) {
-                        pinchStart = Math.hypot(
-                            e.touches[0].clientX - e.touches[1].clientX,
-                            e.touches[0].clientY - e.touches[1].clientY
-                        );
+                        pinchStart = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                         pinchTargetStart = targetDist;
                     }
                 }, { passive: true });
@@ -757,10 +760,7 @@
                 renderer.domElement.addEventListener('touchmove', (e) => {
                     if (e.touches.length === 2 && pinchStart > 0) {
                         e.preventDefault();
-                        const dist = Math.hypot(
-                            e.touches[0].clientX - e.touches[1].clientX,
-                            e.touches[0].clientY - e.touches[1].clientY
-                        );
+                        const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                         targetDist = clampDist(pinchTargetStart * (pinchStart / dist));
                     }
                 }, { passive: false });
@@ -778,14 +778,9 @@
                     'models/model.glb', 
                     (gltf) => {
                         const model = gltf.scene;
-                        
-                        // ═══════════ ПОВОРОТ МОДЕЛИ (ОТНОСИТЕЛЬНО ОСИ OZ) ═══════════
                         model.rotation.set(0, 0, 0); 
-                        // Поворот вокруг оси Z на 90 градусов
-                        model.rotation.z = Math.PI/2; 
-                        model.rotation.x = Math.PI/2*3; 
-                        // ════════════════════════════════════════════════════════════
-
+                        model.rotation.x = Math.PI; 
+                        model.rotation.z = Math.PI / 2; 
                         model.updateMatrixWorld(true);
 
                         const box = new THREE.Box3().setFromObject(model);
@@ -797,7 +792,6 @@
                         model.scale.setScalar(scale);
                         model.position.sub(center.multiplyScalar(scale));
                         model.position.y += (size.y * scale) / 2 - 0.01;
-
                         scene.add(model);
 
                         const newBox = new THREE.Box3().setFromObject(model);
@@ -806,14 +800,12 @@
                         camera.position.set(dist * 0.6, dist * 0.5, dist * 0.8);
                         controls.target.set(0, newSize.y / 2, 0);
                         controls.update();
-                        
                         targetDist = clampDist(camera.position.distanceTo(controls.target));
 
                         if (gltf.animations && gltf.animations.length) {
                             const mixer = new THREE.AnimationMixer(model);
                             gltf.animations.forEach((clip) => mixer.clipAction(clip).play());
-                            viewer = viewer || {};
-                            viewer.mixer = mixer;
+                            viewer = viewer || {}; viewer.mixer = mixer;
                         }
                     },
                     undefined,
@@ -829,10 +821,7 @@
                 function animate() {
                     requestAnimationFrame(animate);
                     if (viewer && viewer.mixer) viewer.mixer.update(0.016);
-                    
                     controls.update();
-
-                    // ═══ Интерполяция для плавного зума ═══
                     if (targetDist > 0) {
                         const tmpOffset = new THREE.Vector3().subVectors(camera.position, controls.target);
                         const currentDist = tmpOffset.length();
@@ -843,11 +832,9 @@
                             camera.position.copy(controls.target).add(tmpOffset);
                         }
                     }
-
                     renderer.render(scene, camera);
                 }
                 animate();
-
             } catch (err) { console.warn('Three.js не загрузился:', err); }
         }
 
