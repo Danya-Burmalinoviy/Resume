@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме — Даниил Емельянов</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        :root { --primary: #1a73e8; --primary-dark: #1557b0; --accent: #00BCD4; --bg: #ffffff; --text: #1E293B; --text-light: #64748B; --heading: #0F1F3D; --border: #DCE7F5; --gradient: linear-gradient(135deg, #1a73e8 0%, #4A9BF5 100%); --gradient-accent: linear-gradient(135deg, #00BCD4 0%, #1a73e8 100%); }
+        @page { size: A4; margin: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); background: #525659; display: flex; justify-content: center; padding: 40px; }
+        .a4-page { width: 210mm; height: 297mm; background: var(--bg); box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 40px 45px; position: relative; overflow: hidden; }
+        .print-btn { position: fixed; top: 20px; right: 20px; background: var(--gradient); color: #fff; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4); transition: transform 0.2s; z-index: 100; }
+        .print-btn:hover { transform: translateY(-2px); }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; gap: 20px; }
+        .name-block { flex: 1; }
+        .name-block h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--heading); margin-bottom: 8px; }
+        .name-block h1 span { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .name-block h2 { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
+        .contact-block { text-align: right; font-size: 0.9rem; color: var(--text-light); line-height: 1.8; flex-shrink: 0; white-space: nowrap; }
+        .contact-block a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .section-title { font-size: 1.2rem; font-weight: 800; color: var(--heading); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .section-title::after { content: ''; flex: 1; height: 2px; background: var(--border); border-radius: 2px; }
+        .timeline { position: relative; padding-left: 16px; margin-bottom: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); }
+        .timeline-date { font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .timeline-title { font-size: 1rem; font-weight: 700; color: var(--heading); }
+        .timeline-subtitle { font-size: 0.9rem; font-weight: 600; color: var(--text-light); margin-bottom: 8px; }
+        .timeline-list { list-style-type: none; padding-left: 0; }
+        .timeline-list li { font-size: 0.88rem; color: var(--text); margin-bottom: 4px; padding-left: 14px; position: relative; }
+        .timeline-list li::before { content: '•'; position: absolute; left: 0; color: var(--primary); font-weight: bold; }
+        .project-item { background: #F5F9FF; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; }
+        .project-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--heading); margin-bottom: 4px; }
+        .project-item p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 8px; }
+        .skills-block { margin-bottom: 30px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { background: #EAF2FE; color: var(--primary-dark); border: 1px solid #D0E1FD; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+        .edu-item { margin-bottom: 16px; }
+        .edu-item h4 { font-size: 1rem; font-weight: 700; color: var(--heading); margin-bottom: 4px; }
+        .edu-item p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px; }
+        .edu-item .highlight { font-weight: 700; color: var(--primary); }
+        .achievements-list { list-style: none; }
+        .achievements-list li { font-size: 0.85rem; color: var(--text); margin-bottom: 8px; display: flex; align-items: flex-start; gap: 6px; }
+        .achievements-list li span { color: var(--primary); font-weight: bold; }
+        @media print { body { background: none; padding: 0; } .a4-page { box-shadow: none; width: 210mm; height: 297mm; padding: 30px 35px; } .print-btn { display: none; } }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Скачать PDF</button>
+    <div class="a4-page">
+        <header class="header">
+            <div class="name-block">
+                <h1>Даниил <span>Емельянов</span></h1>
+                <h2>Инженер-конструктор · Антенны и СВЧ · Проектирование SMD-оборудования</h2>
+            </div>
+            <div class="contact-block">
+                <div>📍 г. Новосибирск</div>
+                <div>📞 <a href="tel:+79246540968">+7 (924) 654-09-68</a></div>
+                <div>✉️ <a href="mailto:burmalinoviy@yandex.com">burmalinoviy@yandex.com</a></div>
+            </div>
+        </header>
+        <div class="main-grid">
+            <div class="left-col">
+                <section>
+                    <h3 class="section-title">Опыт работы</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Февраль 2025 — Май 2025</div>
+                            <div class="timeline-title">Капитан команды «SMD-установщик»</div>
+                            <div class="timeline-subtitle">Акселератор СтудСтартап 2025</div>
+                            <ul class="timeline-list">
+                                <li>Спроектировал механику и сборку в Autodesk Inventor.</li>
+                                <li>Создал технологию обработки деталей в Siemens NX CAM.</li>
+                                <li>Рассчитал себестоимость, подобрал элементную базу и пневмосистему.</li>
+                                <li>Собрал рабочий прототип. Результат: <b>1 место</b> на защите.</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Октябрь 2023 — Апрель 2024</div>
+                            <div class="timeline-title">Участник проекта «Умная теплица»</div>
+                            <div class="timeline-subtitle">Акселератор СтудСтартап 2024</div>
+                            <ul class="timeline-list">
+                                <li>Разработал электронику: плату на ESP32 с датчиками температуры, влажности и освещённости.</li>
+                                <li>Написал прошивку и веб-интерфейс для удалённого мониторинга и управления поливом.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="section-title">Ключевые проекты</h3>
+                    <div class="project-item">
+                        <h4>SMD-установщик</h4>
+                        <p>Автоматическая установка для монтажа SMD-компонентов с точностью позиционирования 100 мкм. Победитель СтудСтартап 2025.</p>
+                    </div>
+                    <div class="project-item">
+                        <h4>Двухсторонняя антенна Вивальди</h4>
+                        <p>В рамках НИР выполнил моделирование резонансных частот и оптимизацию топологии излучателя. Изготовлен макет, проведены замеры характеристик.</p>
+                    </div>
+                </section>
+            </div>
+            <div class="right-col">
+                <section class="skills-block">
+                    <h3 class="section-title">Навыки</h3>
+                    <div class="tags">
+                        <span class="tag">AWR</span>
+                        <span class="tag">CST Studio</span>
+                        <span class="tag">SolidWorks</span>
+                        <span class="tag">Altium Designer</span>
+                        <span class="tag">Autodesk Inventor</span>
+                        <span class="tag">Siemens NX</span>
+                        <span class="tag">КОМПАС-3D</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">C++</span>
+                    </div>
+                </section>
+                <section class="skills-block">
+                    <h3 class="section-title">Образование</h3>
+                    <div class="edu-item">
+                        <h4>НГТУ (2021 — 2025)</h4>
+                        <p>Факультет радиотехники и электроники</p>
+                        <p>Кафедра КТРС</p>
+                        <p>Направление: «Конструирование и технология электронных средств»</p>
+                        <p>Средний балл: <span class="highlight">4.41 / 5.0</span></p>
+                    </div>
+                </section>
+                <section class="skills-block">
+                    <h3 class="section-title">Достижения</h3>
+                    <ul class="achievements-list">
+                        <li><span>🏆</span> Победитель СтудСтартап 2025</li>
+                        <li><span>🌱</span> Участник СтудСтартап 2024</li>
+                        <li><span>📡</span> Разработка антенны Вивальди (НИР)</li>
+                        <li><span>🔬</span> Участник программы «УМНИК» (разработка стенда нанесения паяльной пасты)</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
